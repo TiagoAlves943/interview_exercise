@@ -12,8 +12,8 @@ const routes = express.Router();
 
 routes.post('/', [
     // username must be an email
-    check('firstName').exists(),
-    check('lastName').exists(),
+    check('givenName').exists(),
+    check('familyName').exists(),
     check('email').exists().isEmail(),
 ], async (req, res) => {
     // Finds the validation errors in this request and wraps them in an object with handy functions
@@ -25,28 +25,26 @@ routes.post('/', [
     }
     try {
         const {
-            firstName,
-            lastName,
+            givenName,
+            familyName,
             email
         } = req.body;
-        console.log('teste', req.body);
-        const newUser = await createUser(firstName, lastName, email);
-        return res.status(200).json([{
-            firstName,
-            lastName,
-            email,
+        const newUser = await createUser(givenName, familyName, email);
+        const listUsers = await selectUser({
             id: newUser
-        }]);
+        });
+        return res.status(200).json(listUsers);
     } catch (err) {
+        console.error('err', err);
         return res.sendStatus(500);
     }
 });
 
 routes.put('/:id', [
     // username must be an email
-    check('lastName').exists(),
+    check('familyName').exists(),
     check('id').exists().isNumeric(),
-    check('firstName').exists(),
+    check('givenName').exists(),
     check('email').exists().isEmail(),
 ], async (req, res) => {
     // Finds the validation errors in this request and wraps them in an object with handy functions
@@ -57,24 +55,31 @@ routes.put('/:id', [
         });
     }
     try {
+        let listUsers = await selectUser({
+            id: req.params.id
+        });
+        if (listUsers.length === 0) {
+            return res.sendStatus(204);
+        }
         const {
-            firstName,
-            lastName,
+            givenName,
+            familyName,
             email
         } = req.body;
-        await updateUser(firstName, lastName, email, req.params.id);
-        return res.status(200).json([{
-            firstName,
-            lastName,
-            email,
+        await updateUser(givenName, familyName, email, req.params.id);
+        listUsers = await selectUser({
             id: req.params.id
-        }]);
+        });
+        return res.status(200).json(listUsers);
     } catch (err) {
+        console.error('err', err);
         return res.sendStatus(500);
     }
 });
 
-routes.get('/', async (req, res) => {
+routes.get('/:id', [
+    check('id').exists().isNumeric()
+], async (req, res) => {
     // Finds the validation errors in this request and wraps them in an object with handy functions
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -83,9 +88,22 @@ routes.get('/', async (req, res) => {
         });
     }
     try {
+        const listUsers = await selectUser({
+            id: req.params.id
+        });
+        return res.status(200).json(listUsers);
+    } catch (err) {
+        console.error('err', err);
+        return res.sendStatus(500);
+    }
+});
+
+routes.get('/', async (req, res) => {
+    try {
         const listUsers = await selectUser(req.query);
         return res.status(200).json(listUsers);
     } catch (err) {
+        console.error('err', err);
         return res.sendStatus(500);
     }
 });

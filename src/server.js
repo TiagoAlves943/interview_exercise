@@ -4,14 +4,8 @@ import {
 } from './configs/constans';
 import routes from './routes';
 import {
-    db,
     initDB
 } from './dbservice/init';
-import {
-    createUser,
-    selectUser,
-    updateUser,
-} from './dbservice/user';
 import validator from 'express-validator';
 import bodyParser from 'body-parser';
 
@@ -21,6 +15,7 @@ server.use(bodyParser.json());
 server.use(bodyParser.urlencoded({
     extended: true
 }));
+
 // if was need authenthication added up here before adding the routes
 Object.keys(routes).forEach(key => server.use(`/${key}`, routes[key]));
 
