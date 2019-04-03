@@ -31,7 +31,7 @@
 						"user"
 					]
 				},
-				"description": "List of users, possible to query it by firstName,lastName or id;"
+				"description": "List of users, possible to query it by  givenName,familyName, email or id;"
 			},
 			"response": []
 		},
