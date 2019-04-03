@@ -4,10 +4,10 @@ import {
     validationResult
 } from 'express-validator/check';
 import {
-    createUser,
-    selectUser,
-    updateUser
-} from '../dbservice/user';
+    createUserHandler,
+    selectUserHandler,
+    updateUserHandler,
+} from '../handlers/user';
 const routes = express.Router();
 
 routes.post('/', [
@@ -29,13 +29,9 @@ routes.post('/', [
             familyName,
             email
         } = req.body;
-        const newUser = await createUser(givenName, familyName, email);
-        const listUsers = await selectUser({
-            id: newUser
-        });
-        return res.status(200).json(listUsers);
+        const newUser = await createUserHandler(givenName, familyName, email);
+        return res.status(200).json(newUser);
     } catch (err) {
-        console.error('err', err);
         return res.sendStatus(500);
     }
 });
@@ -55,22 +51,14 @@ routes.put('/:id', [
         });
     }
     try {
-        let listUsers = await selectUser({
-            id: req.params.id
-        });
-        if (listUsers.length === 0) {
-            return res.sendStatus(204);
-        }
+
         const {
             givenName,
             familyName,
             email
         } = req.body;
-        await updateUser(givenName, familyName, email, req.params.id);
-        listUsers = await selectUser({
-            id: req.params.id
-        });
-        return res.status(200).json(listUsers);
+        const updateUser = await updateUserHandler(givenName, familyName, email, req.params.id);
+        return res.status(200).json(updateUser);
     } catch (err) {
         console.error('err', err);
         return res.sendStatus(500);
@@ -88,7 +76,7 @@ routes.get('/:id', [
         });
     }
     try {
-        const listUsers = await selectUser({
+        const listUsers = await selectUserHandler({
             id: req.params.id
         });
         return res.status(200).json(listUsers);
@@ -100,7 +88,7 @@ routes.get('/:id', [
 
 routes.get('/', async (req, res) => {
     try {
-        const listUsers = await selectUser(req.query);
+        const listUsers = await selectUserHandler(req.query);
         return res.status(200).json(listUsers);
     } catch (err) {
         console.error('err', err);
