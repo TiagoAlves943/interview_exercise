@@ -1,0 +1,158 @@
+{
+	"info": {
+		"_postman_id": "7f6f4a6c-54a7-4726-b62d-a36b62f0e363",
+		"name": "InterviewExercise",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "List of Users",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:49160/user",
+					"host": [
+						"localhost"
+					],
+					"port": "49160",
+					"path": [
+						"user"
+					]
+				},
+				"description": "List of users, possible to query it by firstName,lastName or id;"
+			},
+			"response": []
+		},
+		{
+			"name": "Create a user",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "givenName",
+							"value": "joana",
+							"type": "text"
+						},
+						{
+							"key": "familyName",
+							"value": "t",
+							"type": "text"
+						},
+						{
+							"key": "email",
+							"value": "te.2@tam.com",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:49160/user",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "49160",
+					"path": [
+						"user"
+					]
+				},
+				"description": "Create a user, recieve givenName,familyName and email."
+			},
+			"response": []
+		},
+		{
+			"name": "Update a user",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "givenName",
+							"value": "joana",
+							"type": "text"
+						},
+						{
+							"key": "familyName",
+							"value": "teste",
+							"type": "text"
+						},
+						{
+							"key": "email",
+							"value": "te.2@tam.com",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:49160/user/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "49160",
+					"path": [
+						"user",
+						"1"
+					]
+				},
+				"description": "Change a user, recieve givenName,familyName and email"
+			},
+			"response": []
+		},
+		{
+			"name": "Get a User",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:49160/user/2",
+					"host": [
+						"localhost"
+					],
+					"port": "49160",
+					"path": [
+						"user",
+						"2"
+					]
+				},
+				"description": "Acording with the id, will return it's user."
+			},
+			"response": []
+		}
+	]
+}
