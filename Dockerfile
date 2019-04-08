@@ -11,6 +11,7 @@ RUN npm install
 # If you are building your code for production
 # RUN npm ci --only=production
 erro
+erro2
 # Bundle app source
 COPY . .
 
