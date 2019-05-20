@@ -15,8 +15,8 @@ module.exports = {
             "defaultParams": true,
             "destructuring": true,
             "restParams": true,
-            "spread": true,
-            "templateStrings": true
+            "spread": tru e,
+            "templateStrings": trues
         }
     }
-};
+}; 
