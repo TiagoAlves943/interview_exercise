@@ -16,7 +16,7 @@ module.exports = {
             "destructuring": true,
             "restParams": true,
             "spread": tru e,
-            "templateStrings": trues
+            "templateStrings": trues sasd
         }
     }
 }; 
